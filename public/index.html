@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Middleware Demo</title>
+</head>
+
+<body>
+
+    <h1>Express.js Middleware Demo</h1>
+
+    <h3>Student Registration</h3>
+
+    <form id="studentForm">
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter Student Name"
+            required
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            id="department"
+            placeholder="Enter Department"
+            required
+        >
+
+        <br><br>
+
+        <button type="submit">Submit Student</button>
+
+    </form>
+
+    <h3>Server Response:</h3>
+
+    <pre id="result">Waiting for data...</pre>
+
+    <script>
+        document.getElementById("studentForm")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const student = {
+                name: document.getElementById("name").value,
+                department: document.getElementById("department").value
+            };
+
+            const response = await fetch('/api/student', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(student)
+            });
+
+            const data = await response.json();
+
+            document.getElementById("result").textContent =
+                JSON.stringify(data, null, 2);
+
+        });
+    </script>
+
+</body>
+</html>
